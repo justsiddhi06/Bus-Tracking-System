@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Bus Details</title>
+</head>
+<body>
+    <h2>Add Bus Details</h2>
+    <form action="/add_bus" method="POST">
+        <label for="bus_no">Bus Number:</label><br>
+        <input type="text" id="bus_no" name="bus_no"><br>
+        
+        <label for="driver_name">Driver Name:</label><br>
+        <input type="text" id="driver_name" name="driver_name"><br>
+        
+        <label for="driver_contact">Driver Contact:</label><br>
+        <input type="text" id="driver_contact" name="driver_contact"><br>
+        
+        <label for="route">Route:</label><br>
+        <input type="text" id="route" name="route"><br>
+         
+        <input type="submit" value="Submit">
+    </form>
+    <section>
+        <div class="action-button">
+            <button onclick="getBusDetails()">Bus Details</button>
+        </div>
+    </section>
+</body>
+<script>
+    function getBusDetails(){
+        window.location.href = "/show_busdetails"
+    }
+</script>
+</html>

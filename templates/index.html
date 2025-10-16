@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Tracking System - Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #4caf50;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #45a049;
+            color: white;
+        }
+
+        section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .go-to-page-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .go-to-page-button:hover {
+            background-color: #45a049;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .action-form {
+            margin: 0 10px;
+        }
+        .action-button {
+            margin-top: 9px;
+            padding: 2px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover {
+            background-color: #45a049;
+        }
+        .success-message {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bus Tracking System</h1>
+    </header>
+
+    <nav>
+        <div class="button-container">
+            <a href="#" onclick="openLoginPage()" class="go-to-page-button">Login</a>
+        </div>
+        <div class="button-container">
+            <a href="#" onclick="openAboutPage()" class="go-to-page-button">About Us</a>
+        </div>
+    </nav>
+
+    <section>
+        <h2>Welcome to the Bus Tracking System</h2>
+        <p>This system helps you track buses and retrieve information about their locations.</p>
+    
+        <div class="action-buttons">
+            <div class="button-container">
+                <a href="#" onclick="openMap()" class="go-to-page-button">Show on Map</a>
+            </div>
+            <div class="action-button">
+                <button onclick="getLocation()">Get Current Location</button>
+            </div>
+        </div>
+        <div id="demo"></div>
+        <div id="message"></div> <!-- To display success or error messages -->
+    </section>
+    
+
+    <footer>
+        &copy; 2024 Bus Tracking System. All rights reserved.
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const x = document.getElementById("demo");
+        function getLocation() {
+            try {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } catch (err) {
+                x.innerHTML = err.message;
+            }
+        }
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            x.innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            sendData(latitude, longitude);
+        }
+        function sendData(latitude, longitude) {
+            const data = { latitude, longitude };
+            $.ajax({
+                url: '/process',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    document.getElementById('loc').innerHTML = response.result;
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        function openLoginPage() {
+            // Redirect to the login page
+            window.location.href = "C:\\Users\\HP\\Desktop\\track\\tracking1\\templates\\login.html";
+        }
+        function openAboutPage() {
+            // Redirect to the login page
+            window.location.href = "C:\\Users\\HP\\Desktop\\track\\tracking1\\templates\\login.html";
+        }
+        function openMap() {
+            // Redirect to the login page
+            window.location.href = "/show_map";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Details</title>
+    <!-- Add any necessary styles or scripts -->
+</head>
+<body>
+    <header>
+        <h1>Bus Details</h1>
+    </header>
+
+    <section id="busDetails">
+        <!-- Bus details will be displayed here dynamically -->
+    </section>
+
+    <footer>
+        &copy; 2024 Bus Tracking System. All rights reserved.
+    </footer>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Add this code to your JavaScript
+    window.onload = function() {
+        fetchBusDetails();
+    };
+
+    function fetchBusDetails() {
+        $.ajax({
+            url: '/bus_details', // Endpoint to fetch bus details from server
+            type: 'GET',
+            success: function(response) {
+                displayBusDetails(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+    function displayBusDetails(busDetails) {
+        const busDetailsSection = document.getElementById("busDetails");
+        // Assuming busDetails is an array of bus objects
+        busDetails.forEach(function(bus) {
+            const busDetailDiv = document.createElement("div");
+            busDetailDiv.innerHTML = `
+            <h2>Bus No: ${bus.bus_no}</h2>
+            <p>Driver Name: ${bus.driver_name}</p>
+            <p>Driver Contact: ${bus.driver_contact}</p>
+            <p>Route: ${bus.route}</p>
+            `;
+            busDetailsSection.appendChild(busDetailDiv);
+        });
+    }
+
+</script>
+</html>

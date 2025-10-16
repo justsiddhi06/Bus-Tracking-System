@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Tracking System - Sign Up</title>
+    <style>
+      body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+          color: #333;
+      }
+
+      header {
+          background-color: #333;
+          color: white;
+          padding: 20px 0;
+          text-align: center;
+      }
+
+      form {
+          max-width: 400px;
+          margin: 20px auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+          text-align: center;
+          margin-bottom: 20px;
+      }
+
+      label {
+          display: block;
+          margin-bottom: 8px;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="submit"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          display: inline-block;
+          box-sizing: border-box;
+      }
+
+      input[type="submit"] {
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+          background-color: #45a049;
+      }
+
+      .switch-page {
+          text-align: center;
+          margin-top: 10px;
+      }
+
+      .switch-page a {
+          color: #4caf50;
+          text-decoration: none;
+      }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Bus Tracking System</h1>
+    </header>
+
+    <form id="signupForm" action="/signup_driver" method="post">
+      <h2>Sign Up</h2>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirm_password" required>
+
+      <input type="submit" value="Sign Up">
+    </form>
+
+    <div class="switch-page">
+        <span>Already have an account? <a href="#" onclick="openLoginPage()">Login</a></span>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            var username = document.getElementById('newUsername').value;
+            var password = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Prevent form submission
+                alert('Passwords do not match.');
+            }
+
+            if (password.length < 6) {
+                event.preventDefault(); // Prevent form submission
+                alert('Password should be at least 6 characters long.');
+            }
+        });
+        function openLoginPage() {
+            // Redirect to the login page
+            window.location.href = "/show_login";
+        }
+    </script>
+</body>
+
+</html>

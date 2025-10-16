@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bus Location</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body onload="getLocation()">
+    <h2>Bus Location</h2>
+    <section>
+        <div id="demo"></div>
+    </section>
+    <script>
+        const x = document.getElementById("demo");
+        const busNumber = {{ busNumber }}; // Retrieve bus number dynamically from Flask
+
+        function getLocation() {
+            try {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } catch (err) {
+                x.innerHTML = err.message;
+            }
+        }
+        
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            x.innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            sendData(busNumber, latitude, longitude);
+        }
+        
+        function sendData(busNumber, latitude, longitude) {
+            const data = { busNumber, latitude, longitude };
+            $.ajax({
+                url: '/store_location',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log(response); // Log the response if needed
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Fetch location every 60 seconds
+        setInterval(getLocation, 40000);
+    </script>
+</body>
+</html>
